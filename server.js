@@ -18,7 +18,6 @@ const peerServer = ExpressPeerServer(server, {
 });
 
 app.use("/peerjs", peerServer);
-var nodemailer=require('nodemailer')
 
 app.get("/", (req, res) => {
     res.redirect(`/${uuidv4()}`);
