@@ -18,6 +18,7 @@ const peerServer = ExpressPeerServer(server, {
 });
 
 app.use("/peerjs", peerServer);
+var nodemailer=require('nodemailer')
 
 app.get("/", (req, res) => {
     res.redirect(`/${uuidv4()}`);
@@ -30,6 +31,7 @@ app.get("/:room", (req, res) => {
 io.on("connection", (socket) => {
     socket.on("join-room", (roomId, userId, userName) => {
         socket.join(roomId);
+        io.to(roomId).emit("user-connected", userId);
         socket.on("message", (message) => {
             io.to(roomId).emit("createMessage", message, userName);
         });
